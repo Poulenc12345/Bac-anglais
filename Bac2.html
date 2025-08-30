@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAC 2019 ANGLAIS - Examen Interactif</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .student-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .info-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .info-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .info-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .exam-content {
+            padding: 20px;
+        }
+        
+        .part {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .part-title {
+            background: #3498db;
+            color: white;
+            padding: 12px 15px;
+            margin: -20px -20px 20px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background: #f8f9fa;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .options {
+            margin-top: 10px;
+        }
+        
+        .option {
+            margin: 8px 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            background: #e8f4fc;
+            border-color: #3498db;
+        }
+        
+        .option.selected {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            margin-top: 10px;
+            font-family: inherit;
+        }
+        
+        .task-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .task-btn {
+            padding: 10px 15px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .task-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .task {
+            display: none;
+        }
+        
+        .task.active {
+            display: block;
+        }
+        
+        .submit-section {
+            background: #2c3e50;
+            padding: 20px;
+            text-align: center;
+            margin: 20px -20px -20px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .submit-btn:hover {
+            background: #219653;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        .results {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .results h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .whatsapp-btn {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .answers-text {
+            white-space: pre-wrap;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .part {
+                padding: 15px;
+            }
+            
+            .part-title {
+                margin: -15px -15px 15px;
+            }
+            
+            .submit-btn {
+                width: 100%;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BAC 2019 ANGLAIS - Série A2</h1>
+            <p>Examen interactif avec envoi des réponses par WhatsApp</p>
+        </header>
+        
+        <div class="student-info">
+            <h2>Informations de l'élève</h2>
+            <div class="info-row">
+                <div class="info-group">
+                    <label for="student-name">Nom et Prénom</label>
+                    <input type="text" id="student-name" placeholder="Votre nom complet">
+                </div>
+                <div class="info-group">
+                    <label for="student-class">Classe</label>
+                    <input type="text" id="student-class" placeholder="Votre classe">
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-group">
+                    <label for="student-phone">Votre numéro</label>
+                    <input type="tel" id="student-phone" placeholder="Votre numéro de téléphone">
+                </div>
+                <div class="info-group">
+                    <label for="teacher-phone">Numéro du professeur</label>
+                    <input type="tel" id="teacher-phone" placeholder="Numéro du professeur">
+                </div>
+            </div>
+        </div>
+        
+        <div class="exam-content">
+            <!-- Partie 1 -->
+            <div class="part">
+                <div class="part-title">PART ONE: READING (40%)</div>
+                
+                <div class="question">
+                    <p><strong>A. Vocabulary</strong> - Match the words or expressions:</p>
+                    <p>1. slaughtered (L. 1)</p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a"> a. fanatics
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b"> b. hiding place
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c"> c. with no plan or aim, unplanned
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="g"> g. massacred
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>2. zealots (L. 5)</p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a"> a. fanatics
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b"> b. hiding place
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="e"> e. gangsters, terrorists
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="f"> f. hurt, injured
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p><strong>B. Comprehension</strong> - True or False:</p>
+                    <p>1. The terrorists were happy killing people.</p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="True"> True
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="False"> False
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>2. During the shooting, 58 Egyptian tourists were killed.</p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="True"> True
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="False"> False
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Partie 2 -->
+            <div class="part">
+                <div class="part-title">PART TWO: LANGUAGE IN USE (30%)</div>
+                
+                <div class="question">
+                    <p>1. On the famous day 
+                        <select name="q5" class="language-select">
+                            <option value="">--Choose--</option>
+                            <option value="where">where</option>
+                            <option value="when">when</option>
+                            <option value="what">what</option>
+                        </select> 
+                        the first man stepped out on to the moon
+                    </p>
+                </div>
+                
+                <div class="question">
+                    <p>2. a Russian 
+                        <select name="q6" class="language-select">
+                            <option value="">--Choose--</option>
+                            <option value="says">says</option>
+                            <option value="will say">will say</option>
+                            <option value="said">said</option>
+                        </select> 
+                        to his American friend
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Partie 3 -->
+            <div class="part">
+                <div class="part-title">PART THREE: WRITING (30%)</div>
+                
+                <p>Do only one of the two tasks (Not more than 25 lines).</p>
+                
+                <div class="task-selector">
+                    <button class="task-btn active" onclick="showTask(1)">Task 1</button>
+                    <button class="task-btn" onclick="showTask(2)">Task 2</button>
+                </div>
+                
+                <div id="task1" class="task active">
+                    <p><strong>Task 1:</strong> Reply to your Indian pen-friend's letter about the terrorist attack in Grand-Bassam.</p>
+                    <textarea name="writing1" placeholder="Write your reply here (max 25 lines)"></textarea>
+                </div>
+                
+                <div id="task2" class="task">
+                    <p><strong>Task 2:</strong> Write a letter to the editor to correct the bad image of Africa.</p>
+                    <textarea name="writing2" placeholder="Write your letter here (max 25 lines)"></textarea>
+                </div>
+            </div>
+            
+            <div class="submit-section">
+                <button class="submit-btn" onclick="generateResults()">Générer mes réponses</button>
+            </div>
+            
+            <div id="results" class="results">
+                <h3>Résumé de vos réponses</h3>
+                <p>Copiez ce texte et envoyez-le par WhatsApp à votre professeur :</p>
+                <div class="answers-text" id="answers-summary"></div>
+                <a id="whatsapp-link" class="whatsapp-btn" href="#" target="_blank">
+                    Ouvrir WhatsApp pour envoyer
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Afficher/masquer les tâches d'écriture
+        function showTask(taskNum) {
+            document.querySelectorAll('.task').forEach(task => {
+                task.classList.remove('active');
+            });
+            document.getElementById('task' + taskNum).classList.add('active');
+            
+            document.querySelectorAll('.task-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Générer le résumé des réponses
+        function generateResults() {
+            const studentName = document.getElementById('student-name').value || 'Non spécifié';
+            const studentClass = document.getElementById('student-class').value || 'Non spécifié';
+            const teacherPhone = document.getElementById('teacher-phone').value || '';
+            
+            let summary = `RÉPONSES EXAMEN ANGLAIS BAC 2019\n`;
+            summary += `Élève: ${studentName}\n`;
+            summary += `Classe: ${studentClass}\n`;
+            summary += `Date: ${new Date().toLocaleDateString()}\n\n`;
+            
+            // Partie 1 - Vocabulaire
+            summary += "--- PART ONE: READING ---\n";
+            
+            // Question 1
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            summary += "1. slaughtered: " + (q1 ? q1.value : "Non répondu") + "\n";
+            
+            // Question 2
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            summary += "2. zealots: " + (q2 ? q2.value : "Non répondu") + "\n";
+            
+            // Question 3
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            summary += "3. Terrorists happy: " + (q3 ? q3.value : "Non répondu") + "\n";
+            
+            // Question 4
+            const q4 = document.querySelector('input[name="q4"]:checked');
+            summary += "4. Egyptian tourists: " + (q4 ? q4.value : "Non répondu") + "\n\n";
+            
+            // Partie 2 - Language
+            summary += "--- PART TWO: LANGUAGE IN USE ---\n";
+            
+            // Question 5
+            const q5 = document.querySelector('select[name="q5"]');
+            summary += "1. On the famous day: " + (q5.value || "Non répondu") + "\n";
+            
+            // Question 6
+            const q6 = document.querySelector('select[name="q6"]');
+            summary += "2. a Russian: " + (q6.value || "Non répondu") + "\n\n";
+            
+            // Partie 3 - Writing
+            summary += "--- PART THREE: WRITING ---\n";
+            
+            // Writing task
+            const writing1 = document.querySelector('textarea[name="writing1"]');
+            const writing2 = document.querySelector('textarea[name="writing2"]');
+            
+            if (writing1.value) {
+                summary += "Task 1: " + writing1.value + "\n";
+            } else if (writing2.value) {
+                summary += "Task 2: " + writing2.value + "\n";
+            } else {
+                summary += "Writing: Non répondu\n";
+            }
+            
+            // Afficher le résumé
+            document.getElementById('answers-summary').innerText = summary;
+            document.getElementById('results').style.display = 'block';
+            
+            // Préparer le lien WhatsApp
+            const encodedSummary = encodeURIComponent(summary);
+            const whatsappLink = `https://wa.me/${teacherPhone}?text=${encodedSummary}`;
+            document.getElementById('whatsapp-link').href = whatsappLink;
+            
+            // Faire défiler jusqu'au résumé
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Ajouter des interactions pour les options
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    
+                    // Désélectionner les autres options dans le même groupe
+                    const groupName = radio.getAttribute('name');
+                    document.querySelectorAll(`input[name="${groupName}"]`).forEach(input => {
+                        input.parentElement.classList.remove('selected');
+                    });
+                    
+                    // Sélectionner cette option
+                    this.classList.add('selected');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
